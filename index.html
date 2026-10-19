@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECO CAFÉ | El aroma de lo natural</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Phosphor Icons CDN -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cream: '#F9F6F0',
+              beige: '#EAE0D5',
+              pastelGreen: '#D8E2DC',
+              pastelPink: '#F4ACB7',
+              roseSoft: '#F8EDEB',
+              coffeeLight: '#C6AC8F',
+              coffee: '#5E503F',
+              espresso: '#220F06',
+              gold: '#D4AF37'
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Animación del humo de café */
+    @keyframes steam {
+      0% { transform: translateY(0) scaleX(1); opacity: 0; }
+      15% { opacity: 0.6; }
+      50% { transform: translateY(-15px) scaleX(1.2); opacity: 0.4; }
+      95% { opacity: 0; }
+      100% { transform: translateY(-30px) scaleX(1.5); opacity: 0; }
+    }
+    .steam-line-1 { animation: steam 3s infinite ease-out; }
+    .steam-line-2 { animation: steam 3s infinite ease-out 0.8s; }
+    .steam-line-3 { animation: steam 3s infinite ease-out 1.6s; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F9F6F0;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #C6AC8F;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #5E503F;
+    }
+  </style>
+</head>
+<body class="bg-brand-cream text-brand-espresso font-sans antialiased min-h-screen flex flex-col selection:bg-brand-pastelGreen selection:text-brand-espresso">
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="sticky top-0 z-40 bg-brand-cream/90 backdrop-blur-md border-b border-brand-beige/60 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- LOGO -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-12 h-12 rounded-full border-2 border-brand-coffeeLight bg-white flex items-center justify-center overflow-hidden shadow-sm group-hover:scale-105 transition-transform">
+          <svg viewBox="0 0 100 100" class="w-full h-full">
+            <circle cx="50" cy="50" r="46" fill="#FFF9F5" stroke="#C6AC8F" stroke-width="2"/>
+            <circle cx="50" cy="50" r="41" fill="none" stroke="#F4ACB7" stroke-width="1" stroke-dasharray="2,2"/>
+            <path d="M 40 32 C 40 28, 48 24, 50 20 C 52 24, 60 28, 60 32 C 60 38, 50 42, 50 42 C 50 42, 40 38, 40 32 Z" fill="#F4ACB7" opacity="0.8"/>
+            <path d="M 42 42 C 42 42, 40 36, 45 34 C 50 32, 50 38, 50 38" fill="none" stroke="#C6AC8F" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M 38 43 Q 50 40 62 43 C 65 52 60 55 50 55 C 40 55 35 52 38 43 Z" fill="#5E503F"/>
+            <path d="M 62 45 C 66 45 67 50 62 51" fill="none" stroke="#5E503F" stroke-width="1.5"/>
+            <text x="50" y="70" font-family="serif" font-size="20" font-weight="bold" fill="#C6AC8F" text-anchor="middle">eco</text>
+            <text x="50" y="80" font-family="sans-serif" font-size="10" fill="#F4ACB7" text-anchor="middle" letter-spacing="1">café</text>
+            <path d="M 22 75 Q 15 60 25 45 Q 20 62 30 72 Z" fill="#C6AC8F" opacity="0.7"/>
+          </svg>
+        </div>
+        <div>
+          <span class="font-serif text-2xl font-bold tracking-tight text-brand-espresso block leading-none">eco <span class="text-brand-coffeeLight italic font-normal">café</span></span>
+          <span class="text-[10px] tracking-widest uppercase text-brand-coffee font-semibold">100% Orgánico & Sustentable</span>
+        </div>
+      </a>
+
+      <!-- NAVEGACIÓN PRINCIPAL -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#menu-section" class="text-sm font-medium hover:text-brand-coffeeLight transition-colors">Menú de la Casa</a>
+        <a href="#menu-section" onclick="switchCategory('oficiales')" class="text-sm font-medium hover:text-brand-coffeeLight transition-colors">Productos Oficiales</a>
+        <a href="#menu-section" onclick="switchCategory('combos')" class="text-sm font-medium hover:text-brand-coffeeLight transition-colors">Combos Especiales</a>
+      </nav>
+
+      <!-- BOTÓN CARRITO DE COMPRAS -->
+      <div class="flex items-center gap-4">
+        <button onclick="toggleCart()" class="relative p-2.5 rounded-full bg-brand-roseSoft hover:bg-brand-pastelPink/30 text-brand-espresso transition-all duration-300 group focus:outline-none" aria-label="Ver Carrito">
+          <i class="ph ph-shopping-bag text-2xl group-hover:scale-110 transition-transform"></i>
+          <span id="cart-count" class="absolute -top-1 -right-1 bg-brand-pastelPink text-brand-espresso text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-brand-cream shadow-sm">0</span>
+        </button>
+
+        <a href="#menu-section" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-brand-coffee text-brand-cream font-medium text-sm shadow-sm hover:bg-brand-espresso hover:shadow transition-all duration-300">
+          Ordenar Ahora
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="relative overflow-hidden pt-8 pb-16 lg:py-24 bg-gradient-to-b from-brand-cream via-brand-roseSoft/30 to-brand-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-pastelGreen/50 border border-brand-pastelGreen text-brand-espresso text-xs font-semibold uppercase tracking-wider">
+            <i class="ph ph-leaf text-base"></i> Café de Grano Orgánico Selección Especial
+          </div>
+          <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-brand-espresso">
+            El aroma de lo <span class="italic font-normal text-brand-coffeeLight">natural</span>, hecho con amor.
+          </h1>
+          <p class="text-base sm:text-lg text-brand-coffee/80 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            Disfruta de nuestros granos seleccionados, bebidas artesanales y repostería saludable. Más que café, es un estilo de vida sustentable.
+          </p>
+          <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <a href="#menu-section" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-brand-coffee text-brand-cream font-semibold shadow-md hover:bg-brand-espresso transition-all duration-300 text-center">
+              Explorar Menú
+            </a>
+            <a href="#menu-section" onclick="switchCategory('combos')" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white border border-brand-beige text-brand-espresso font-semibold hover:bg-brand-roseSoft transition-all duration-300 text-center">
+              Ver Combos de la Casa
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="relative w-72 h-72 sm:w-80 sm:h-80 rounded-full bg-brand-roseSoft border-4 border-white shadow-xl flex items-center justify-center">
+            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 flex gap-3">
+              <div class="w-2 h-8 bg-brand-coffeeLight/30 rounded-full steam-line-1"></div>
+              <div class="w-2.5 h-10 bg-brand-coffeeLight/40 rounded-full steam-line-2"></div>
+              <div class="w-2 h-8 bg-brand-coffeeLight/30 rounded-full steam-line-3"></div>
+            </div>
+            
+            <div class="w-56 h-56 rounded-full bg-white shadow-inner flex flex-col items-center justify-center p-6 text-center border border-brand-beige">
+              <i class="ph ph-coffee text-6xl text-brand-coffeeLight mb-2"></i>
+              <span class="font-serif text-xl font-bold text-brand-espresso">ECO CAFÉ</span>
+              <span class="text-xs text-brand-coffee mt-1 font-medium">100% Arábica Orgánico</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MENÚ Y PRODUCTOS ==================== -->
+  <section id="menu-section" class="py-16 bg-white border-t border-brand-beige/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-espresso">Nuestro Menú & Productos</h2>
+        <p class="text-brand-coffee/80 mt-2">Elige tus bebidas favoritas, mercancía oficial o aprovecha nuestros combos especiales.</p>
+      </div>
+
+      <!-- PESTAÑAS DE NAVEGACIÓN DEL MENÚ -->
+      <div class="flex justify-center mb-10">
+        <div class="inline-flex p-1.5 rounded-2xl bg-brand-roseSoft border border-brand-beige/60 max-w-full overflow-x-auto">
+          <button id="tab-menu" onclick="switchCategory('menu')" class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 whitespace-nowrap bg-white text-brand-espresso shadow-sm">
+            Menú
+          </button>
+          <button id="tab-oficiales" onclick="switchCategory('oficiales')" class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 whitespace-nowrap text-brand-coffee hover:text-brand-espresso">
+            Productos Oficiales
+          </button>
+          <button id="tab-combos" onclick="switchCategory('combos')" class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 whitespace-nowrap text-brand-coffee hover:text-brand-espresso">
+            Combos de la Casa
+          </button>
+        </div>
+      </div>
+
+      <!-- CONTENEDOR DINÁMICO DE PRODUCTOS -->
+      <div id="products-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Generado dinámicamente con JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== CARRITO SIDEBAR ==================== -->
+  <div id="cart-sidebar" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    <div class="p-6 border-b border-brand-beige flex items-center justify-between bg-brand-cream">
+      <div class="flex items-center gap-3">
+        <i class="ph ph-shopping-bag text-2xl text-brand-coffee"></i>
+        <h3 class="font-serif text-xl font-bold text-brand-espresso">Tu Pedido</h3>
+      </div>
+      <button onclick="toggleCart()" class="p-2 rounded-full hover:bg-brand-beige/50 text-brand-espresso">
+        <i class="ph ph-x text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Lista de Items -->
+    <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+      <!-- Items agregados JS -->
+    </div>
+
+    <!-- Resumen y Checkout -->
+    <div class="p-6 border-t border-brand-beige bg-brand-cream space-y-4">
+      <div class="flex justify-between items-center text-lg font-bold text-brand-espresso">
+        <span>Total:</span>
+        <span id="cart-total">$0.00</span>
+      </div>
+      <button onclick="checkout()" class="w-full py-3.5 rounded-xl bg-brand-coffee text-white font-bold hover:bg-brand-espresso transition-colors text-center shadow">
+        Confirmar Pedido
+      </button>
+    </div>
+  </div>
+
+  <!-- Overlay para el Carrito -->
+  <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-brand-espresso/40 backdrop-blur-sm z-40 hidden transition-opacity"></div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-brand-cream border-t border-brand-beige/60 py-12 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-4">
+      <p class="font-serif text-xl font-bold text-brand-espresso">eco café</p>
+      <p class="text-xs text-brand-coffee">Más que café, es un estilo de vida sustentable.</p>
+      <p class="text-xs text-brand-coffee/60">© 2026 ECO CAFÉ. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    // BASE DE DATOS DE PRODUCTOS
+    const database = {
+      menu: [
+        { id: 'm1', name: 'Café Latte', category: 'Bebidas Calientes', price: 55, sizes: 'Chico (300ml): $55 | Grande (400ml): $65 | Venti (500ml): $75', desc: 'Espresso intenso combinado con leche cremosa al vapor.', icon: 'ph-coffee' },
+        { id: 'm2', name: 'Cappuccino', category: 'Bebidas Calientes', price: 55, sizes: 'Chico (300ml): $55 | Grande (400ml): $65 | Venti (500ml): $75', desc: 'Equilibrio perfecto entre espresso, leche vaporizada y abundante espuma.', icon: 'ph-coffee' },
+        { id: 'm3', name: 'Café Americano', category: 'Bebidas Calientes', price: 45, sizes: 'Chico (300ml): $45 | Grande (400ml): $55 | Venti (500ml): $65', desc: 'Espresso diluido en agua caliente con un sabor suave y balanceado.', icon: 'ph-coffee' },
+        { id: 'm4', name: 'Caramel Macchiato', category: 'Bebidas Calientes', price: 70, sizes: 'Chico (300ml): $60 | Grande (400ml): $70 | Venti (500ml): $80', desc: 'Leche manchada con espresso y un toque dulce de jarabe de caramelo.', icon: 'ph-coffee' },
+        { id: 'm5', name: 'Chai Tea Latte', category: 'Bebidas Calientes', price: 70, sizes: 'Chico (300ml): $60 | Grande (400ml): $70 | Venti (500ml): $80', desc: 'Mezcla aromática de té negro y especias orientales con leche al vapor.', icon: 'ph-leaf' },
+        { id: 'm6', name: 'Caramel Frappuccino', category: 'Frappés', price: 75, sizes: 'Chico (300ml): $75 | Grande (400ml): $83 | Venti (500ml): $90', desc: 'Café frappeado con hielo, leche, jarabe de caramelo y crema batida.', icon: 'ph-ice-cream' },
+        { id: 'm7', name: 'Strawberries & Cream Frappé', category: 'Frappés', price: 75, sizes: 'Chico (300ml): $65 | Grande (400ml): $75 | Venti (500ml): $85', desc: 'Mezcla cremosa de fresas naturales, leche e hielo batido.', icon: 'ph-ice-cream' },
+        { id: 'm8', name: 'Cheesecake Vegano', category: 'Postres Saludables', price: 109, sizes: 'Rebanada: $109 | Entero: $320', desc: 'Deliciosa tarta de queso vegetal con base de frutos secos y mermelada de frutos rojos.', icon: 'ph-cake' },
+        { id: 'm9', name: 'Tarta Gluten Free', category: 'Postres Saludables', price: 99, sizes: 'Rebanada: $99 | Entero: $440', desc: 'Tarta artesanal elaborada con harinas sin gluten y fruta fresca.', icon: 'ph-cake' },
+        { id: 'm10', name: 'Brownie Keto', category: 'Postres Saludables', price: 60, sizes: 'Pieza individual', desc: 'Brownie de chocolate amargo bajo en carbohidratos y sin azúcar refinada.', icon: 'ph-cookie' }
+      ],
+      oficiales: [
+        { id: 'o1', name: 'Taza Oficial', code: '#342679', price: 120, desc: 'Taza de cerámica color blanca con el logo oficial de ECO CAFÉ.', icon: 'ph-cup' },
+        { id: 'o2', name: 'Termo Eco Café', code: '#342680', price: 280, desc: 'Termo insulado de acero inoxidable con diseño elegante. Conserva el calor.', icon: 'ph-pint-glass' },
+        { id: 'o3', name: 'Bolsa de Café de Grano', code: '#342671', price: 180, desc: 'Café orgánico seleccionado en empaque biodegradable. Ideal para casa.', icon: 'ph-package' },
+        { id: 'o4', name: 'Bolsa de Tela (Tote Bag)', code: '#342659', price: 45, desc: 'Bolsa de tela de algodón orgánico ligera, práctica y reutilizable.', icon: 'ph-t-shirt' },
+        { id: 'o5', name: 'Playera Eco Café', code: '#342789', price: 80, desc: 'Playera 100% algodón cómodo con estampado de la marca.', icon: 'ph-t-shirt' },
+        { id: 'o6', name: 'Sudadera Eco Café', code: '#342781', price: 200, desc: 'Sudadera cálida e interior afelpado con el logo de ECO CAFÉ.', icon: 'ph-armchair' },
+        { id: 'o7', name: 'Gorra Minimalista', code: '#342783', price: 60, desc: 'Gorra ajustable con diseño minimalista y bordado de alta calidad.', icon: 'ph-user' },
+        { id: 'o8', name: 'Llavero Acrílico', code: '#342769', price: 25, desc: 'Llavero de acrílico transparente grabado con el diseño floral de la marca.', icon: 'ph-key' },
+        { id: 'o9', name: 'Colección de Temporada', code: '#349679', price: 300, desc: 'Productos coleccionables especiales (Navidad, San Valentín, Día de Muertos).', icon: 'ph-sparkles' },
+        { id: 'o10', name: 'Paquete Café + Taza', code: '#349671', price: 270, desc: 'Incluye 1 Bolsa de Café de Grano + 1 Taza de cerámica oficial.', icon: 'ph-gift' },
+        { id: 'o11', name: 'Kit Eco Café Completo', code: '#349783', price: 315, desc: 'Incluye 1 Termo insulado + 1 Bolsa de tela + 1 Llavero oficial.', icon: 'ph-gift' }
+      ],
+      combos: [
+        { id: 'c1', name: 'Combo 1', price: 180.00, desc: '2 Latte (Chico) + 1 Rebanada Cheesecake Vegano + 1 Gorra Eco Café de REGALO.', icon: 'ph-gift' },
+        { id: 'c2', name: 'Combo 2', price: 165.00, desc: '2 Caramel Frappuccino (Chico) + 1 Muffin + 1 Bolsa de Tela Eco Café de REGALO.', icon: 'ph-gift' },
+        { id: 'c3', name: 'Combo 3', price: 140.00, desc: '1 Chocolate Caliente (Chico) + 1 Rebanada Tarta Gluten Free + 1 Llavero Eco Café de REGALO.', icon: 'ph-gift' },
+        { id: 'c4', name: 'Combo 4', price: 370.00, desc: '1 Cheesecake Vegano (Entero) + 1 Mocha Frappuccino (Grande) + 1 Sudadera Eco Café de REGALO.', icon: 'ph-gift' },
+        { id: 'c5', name: 'Combo 5', price: 95.00, desc: '1 Espresso (Grande) + 1 Espresso con Panna (Grande) + 1 Panini + 1 Playera Eco Café de REGALO.', icon: 'ph-gift' },
+        { id: 'c6', name: 'Combo 6', price: 250.00, desc: '2 Strawberries & Cream (Grande) + 2 Donas Gluten Free + 1 Galleta + 1 Bolsa Granos de Café de REGALO.', icon: 'ph-gift' },
+        { id: 'c7', name: 'Combo 7', price: 320.00, desc: '1 Vainilla Cream (Venti) + 1 Chocolate Cream (Venti) + 1 Chai (Grande) + 1 Tarta Gluten Free + 1 Termo Eco Café de REGALO.', icon: 'ph-gift' },
+        { id: 'c8', name: 'Combo 8', price: 125.00, desc: '1 Mocha Regular/Blanco (Grande) + 1 Té Teavana (Chico) + 1 Muffin + 1 Taza Eco Café de REGALO.', icon: 'ph-gift' }
+      ]
+    };
+
+    let currentCategory = 'menu';
+    let cart = [];
+
+    // CAMBIAR PESTAÑA
+    function switchCategory(cat) {
+      currentCategory = cat;
+      
+      // Actualizar estilos de botones
+      ['menu', 'oficiales', 'combos'].forEach(c => {
+        const btn = document.getElementById(`tab-${c}`);
+        if (c === cat) {
+          btn.className = 'px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 whitespace-nowrap bg-white text-brand-espresso shadow-sm';
+        } else {
+          btn.className = 'px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 whitespace-nowrap text-brand-coffee hover:text-brand-espresso';
+        }
+      });
+
+      renderProducts();
+    }
+
+    // RENDERIZAR PRODUCTOS
+    function renderProducts() {
+      const container = document.getElementById('products-container');
+      const items = database[currentCategory];
+
+      container.innerHTML = items.map(item => `
+        <div class="bg-white border border-brand-beige/60 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="flex justify-between items-start mb-3">
+              <div class="w-12 h-12 rounded-xl bg-brand-roseSoft flex items-center justify-center text-brand-coffee text-2xl group-hover:scale-110 transition-transform">
+                <i class="ph ${item.icon}"></i>
+              </div>
+              ${item.code ? `<span class="text-[11px] font-mono bg-brand-cream border border-brand-beige/80 px-2 py-0.5 rounded text-brand-coffee">${item.code}</span>` : ''}
+              ${item.category ? `<span class="text-[11px] font-semibold bg-brand-pastelGreen/40 text-brand-espresso px-2.5 py-1 rounded-full">${item.category}</span>` : ''}
+            </div>
+            
+            <h3 class="font-serif text-xl font-bold text-brand-espresso group-hover:text-brand-coffeeLight transition-colors">${item.name}</h3>
+            <p class="text-xs text-brand-coffee/80 mt-2 leading-relaxed">${item.desc}</p>
+            ${item.sizes ? `<p class="text-[11px] text-brand-coffeeLight font-medium mt-2 bg-brand-cream p-2 rounded-lg border border-brand-beige/40">${item.sizes}</p>` : ''}
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-brand-beige/40 flex items-center justify-between">
+            <div>
+              <span class="text-xs text-brand-coffee block">Precio</span>
+              <span class="text-xl font-bold text-brand-espresso">$${item.price.toFixed(2)}</span>
+            </div>
+            <button onclick="addToCart('${item.id}')" class="px-4 py-2.5 rounded-xl bg-brand-coffee text-white text-xs font-bold hover:bg-brand-espresso transition-colors flex items-center gap-1.5 shadow-sm">
+              <i class="ph ph-plus text-sm"></i> Agregar
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // GESTIÓN DEL CARRITO
+    function addToCart(id) {
+      const item = [...database.menu, ...database.oficiales, ...database.combos].find(x => x.id === id);
+      const existing = cart.find(x => x.id === id);
+
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ ...item, qty: 1 });
+      }
+
+      updateCartUI();
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(x => x.id !== id);
+      updateCartUI();
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(x => x.id === id);
+      if (item) {
+        item.qty += delta;
+        if (item.qty <= 0) removeFromCart(id);
+        else updateCartUI();
+      }
+    }
+
+    function updateCartUI() {
+      const cartCount = document.getElementById('cart-count');
+      const cartItems = document.getElementById('cart-items');
+      const cartTotal = document.getElementById('cart-total');
+
+      const totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
+      const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+      cartCount.textContent = totalCount;
+      cartTotal.textContent = `$${totalPrice.toFixed(2)}`;
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = `
+          <div class="text-center py-12 text-brand-coffee/60">
+            <i class="ph ph-shopping-bag text-5xl mb-2 block opacity-40"></i>
+            <p>Tu carrito está vacío.</p>
+          </div>
+        `;
+      } else {
+        cartItems.innerHTML = cart.map(item => `
+          <div class="flex items-center justify-between bg-brand-cream/60 p-3.5 rounded-xl border border-brand-beige/60">
+            <div class="flex-1 pr-3">
+              <h4 class="font-bold text-sm text-brand-espresso">${item.name}</h4>
+              <span class="text-xs text-brand-coffee">$${item.price.toFixed(2)} c/u</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="changeQty('${item.id}', -1)" class="w-7 h-7 rounded-lg bg-white border border-brand-beige text-brand-espresso flex items-center justify-center font-bold text-sm hover:bg-brand-roseSoft">-</button>
+              <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
+              <button onclick="changeQty('${item.id}', 1)" class="w-7 h-7 rounded-lg bg-white border border-brand-beige text-brand-espresso flex items-center justify-center font-bold text-sm hover:bg-brand-roseSoft">+</button>
+              <button onclick="removeFromCart('${item.id}')" class="text-red-400 hover:text-red-600 ml-2">
+                <i class="ph ph-trash text-base"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function toggleCart() {
+      const sidebar = document.getElementById('cart-sidebar');
+      const overlay = document.getElementById('cart-overlay');
+      
+      sidebar.classList.toggle('translate-x-full');
+      overlay.classList.toggle('hidden');
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert('Agrega al menos un producto a tu carrito.');
+        return;
+      }
+      alert('¡Gracias por tu pedido en ECO CAFÉ! Tu orden ha sido enviada con éxito.');
+      cart = [];
+      updateCartUI();
+      toggleCart();
+    }
+
+    // Inicializar
+    renderProducts();
+  </script>
+</body>
+</html>
+
+```
